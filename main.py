@@ -80,7 +80,11 @@ class Importer(QWidget):
 
     def import_data(self):
 
-        filename = QFileDialog.getSaveFileName(self, 'Save CSV', os.getenv('HOME'), 'CSV(*.csv')
+        filename = QFileDialog.getSaveFileName(self,
+                                               'Save CSV',
+                                               os.getenv('HOME'),
+                                               'CSV *.csv'
+                                               )
         x, y = 13, 32
         # x month, y days
         x_start = self.month_start.value()
