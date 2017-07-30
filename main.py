@@ -4,7 +4,7 @@ import os
 import sys
 from PyQt5.QtWidgets import (qApp, QAction, QMainWindow, QApplication,
                             QFileDialog, QPushButton, QTextEdit, QLabel,
-                            QVBoxLayout, QHBoxLayout, QWidget, QSlider)
+                            QVBoxLayout, QHBoxLayout, QWidget, QSlider, QProgressBar, QFrame)
 from PyQt5.QtCore import Qt
 
 ## sample address https://www.wunderground.com/history/airport/RPLL/2013/
@@ -33,6 +33,7 @@ class Importer(QWidget):
         self.month_end.setTickInterval(1)
         self.month_end.setTickPosition(QSlider.TicksBelow)
 
+        # self.prog
         '''
         self.day_slider.setMinimum(1)
         self.day_slider.setMaximum(31)
@@ -47,8 +48,11 @@ class Importer(QWidget):
 
         self.months_start = QLabel('Start \t= ' + str(self.month_start.value()))
         self.months_end = QLabel('End \t= ' + str(self.month_start.value()))
-        self.progress_label = QLabel('Progress')
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setValue(0)
+
         self.sample_site = QLabel(' Sample: https://www.wunderground.com/history/airport/RPLL/2013/')
+        self.sample_site.setFrameShape(QFrame.StyledPanel | QFrame.Plain)
 
         h_layout.addWidget(self.clr_btn)
         h_layout.addWidget(self.import_btn)
@@ -60,7 +64,7 @@ class Importer(QWidget):
         v_layout.addWidget(self.month_end)
         v_layout.addWidget(self.months_end)     # Label
 
-        v_layout.addWidget(self.progress_label)
+        v_layout.addWidget(self.progress_bar)
 
         v_layout.addLayout(h_layout)
 
@@ -114,7 +118,8 @@ class Importer(QWidget):
                         else:
                             site = self.address_txt.toPlainText() + "{}/{}/DailyHistory.html?format=1".format(i, j)
                             #print(site)
-                            self.progress_label.setText(site)
+                            # FIXME: progress bar instead
+                            # self.progress_label.setText(site)
 
                         data = urllib.request.urlopen(site)
 
@@ -123,6 +128,10 @@ class Importer(QWidget):
                             #writer.writerow(str(l))
                             #file.writelines(str(l) + "\n")
                             file.writelines(str(l) + "\n")
+
+                        self.progress_bar.setValue(100 *
+                                                   (i/(x_start-x_end))
+                                                   )
 
     def clear_text(self):
         self.text.clear()
