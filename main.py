@@ -4,7 +4,7 @@ import os
 import sys
 from PyQt5.QtWidgets import (qApp, QAction, QMainWindow, QApplication,
                             QFileDialog, QPushButton, QTextEdit, QLabel,
-                            QVBoxLayout, QHBoxLayout, QWidget, QSlider, QFrame)
+                            QVBoxLayout, QHBoxLayout, QWidget, QSlider)
 from PyQt5.QtCore import Qt
 
 ## sample address https://www.wunderground.com/history/airport/RPLL/2013/
@@ -15,6 +15,8 @@ class Importer(QWidget):
         super(Importer, self).__init__()
 
         self.address_txt = QTextEdit(self)
+        self.address_txt.setPlaceholderText('Type the Wunderground URL HERE')
+
         self.import_btn = QPushButton('Import')
         self.clr_btn = QPushButton('Clear')
         self.month_start = QSlider(Qt.Horizontal)
@@ -37,15 +39,14 @@ class Importer(QWidget):
         self.day_slider.setTickInterval(1)
         self.day_slider.setTickPosition(QSlider.TicksBelow)
         '''
-
         self.init_ui()
 
     def init_ui(self):
         v_layout = QVBoxLayout()
         h_layout = QHBoxLayout()
 
-        self.months_start = QLabel('Start = ' + str(self.month_start.value()))
-        self.months_end = QLabel('Start = ' + str(self.month_start.value()))
+        self.months_start = QLabel('Start \t= ' + str(self.month_start.value()))
+        self.months_end = QLabel('End \t= ' + str(self.month_start.value()))
         self.progress_label = QLabel('Progress')
         self.sample_site = QLabel(' Sample: https://www.wunderground.com/history/airport/RPLL/2013/')
 
@@ -61,7 +62,6 @@ class Importer(QWidget):
 
         v_layout.addWidget(self.progress_label)
 
-
         v_layout.addLayout(h_layout)
 
         self.import_btn.clicked.connect(self.import_data)
@@ -69,14 +69,12 @@ class Importer(QWidget):
         self.month_start.valueChanged.connect(self.slider_change)
         self.month_end.valueChanged.connect(self.slider_change)
 
-
         self.setLayout(v_layout)
-
         self.show()
 
     def slider_change(self):
-        self.months_start.setText('Start = ' + str(self.month_start.value()))
-        self.months_end.setText('End = ' + str(self.month_end.value()))
+        self.months_start.setText('Start \t= ' + str(self.month_start.value()))
+        self.months_end.setText('End \t= ' + str(self.month_end.value()))
 
     def import_data(self):
 
@@ -156,7 +154,7 @@ class MenuBar(QMainWindow):
         file.triggered.connect(self.respond)
 
         self.setWindowTitle('WUnderground Data Importer')
-
+        self.setFocus()
         self.show()
 
     @staticmethod
