@@ -2,9 +2,9 @@ import urllib.request
 import csv
 import os
 import sys
-from PyQt5.QtWidgets import qApp, QAction, QMainWindow, QApplication
-from PyQt5.QtWidgets import QFileDialog, QPushButton, QTextEdit, QLabel
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QWidget, QSlider
+from PyQt5.QtWidgets import (qApp, QAction, QMainWindow, QApplication,
+                            QFileDialog, QPushButton, QTextEdit, QLabel,
+                            QVBoxLayout, QHBoxLayout, QWidget, QSlider, QFrame)
 from PyQt5.QtCore import Qt
 
 ## sample address https://www.wunderground.com/history/airport/RPLL/2013/
